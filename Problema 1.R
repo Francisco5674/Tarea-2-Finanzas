@@ -74,11 +74,18 @@ front_eff <- efficient.frontier(sample_data_c[,1], var(sample_retornos_c), nport
 
 plot.Markowitz(front_eff)
 
+# sacamos un csv para el grafico
+
+data_to_csv = cbind(eff_Front$er, eff_Front$sd)
+colnames(data_to_csv) = c('er', 'sd')
+write.csv(data_to_csv, 'puntos_front_eff.csv')
+
 # d)
 
 # calculamos el portafolio tangente y lo añadimos al registro
 
 tang_port_d = tangency.portfolio(sample_data_c[,1], var(sample_retornos_c), risk.free = rf)
+tang_port_d
 
 tang_retornos = c()
 
@@ -89,6 +96,8 @@ for (name in names_d){
 
 sample_retornos = cbind(sample_retornos ,rowSums(tang_retornos))
 colnames(sample_retornos)[9] = 'tang_port_d'
+
+write.csv(sample_retornos, 'csv/sample_retornos.csv')
 
 # e)
 
