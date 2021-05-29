@@ -169,4 +169,8 @@ productoria_f <- function(data){
   return(res)
 }
 
-
+source('effPortfolio.R')
+source('GlobMin.R')
+source('effFrontier.R')
+source('plot.R')
+source('tangency.portfolio.R')
