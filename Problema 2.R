@@ -7,9 +7,9 @@ load('DatosTarea2.RData')
 nombres <- colnames(datos)[2:26]
 data_reg = list()
 for (name in nombres){
-  y = datos[, name] - datos[,'RF']
-  x = datos[, 'MktRF']
-  regresion <- lm(y~x)
+  Portafolios = datos[, name] - datos[,'RF']
+  Beta = datos[, 'MktRF']
+  regresion <- lm(Portafolios~Beta)
   data_reg[[name]] = regresion
   print(c('############## ', name, '#############'))
   print(summary(regresion))
@@ -41,4 +41,6 @@ prima_riesgo
 
 plot(coeficientes, prima_riesgo)
 abline(lm(prima_riesgo~coeficientes))
+
+corte_transversal
 

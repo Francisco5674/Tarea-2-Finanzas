@@ -68,26 +68,29 @@ sample_retornos_c <- sample_retornos[,colnames(sample_retornos)
 
 globalMin.portfolio(sample_data_c[,1], var(sample_retornos_c))
 
-efficient.portfolio(sample_data_c[,1], var(sample_retornos_c), target.return = 0.009129418)
+efficient.portfolio(sample_data_c[,1], var(sample_retornos_c), target.return = 0.0137)
 
 front_eff <- efficient.frontier(sample_data_c[,1], var(sample_retornos_c), nport = 30)
+
+points(0.0137, 0.0601, col= 'red')
 
 plot.Markowitz(front_eff)
 
 # sacamos un csv para el grafico
 
-data_to_csv = cbind(eff_Front$er, eff_Front$sd)
+data_to_csv = cbind(front_eff$er, front_eff$sd)
 colnames(data_to_csv) = c('er', 'sd')
-write.csv(data_to_csv, 'puntos_front_eff.csv')
+write.csv(data_to_csv, 'csv/puntos_front_eff.csv')
 
 # d)
 
 # calculamos el portafolio tangente y lo añadimos al registro
 
 tang_port_d = tangency.portfolio(sample_data_c[,1], var(sample_retornos_c), risk.free = rf)
-tang_port_d
 
 tang_retornos = c()
+
+tang_port_d
 
 for (name in names_d){
   tang_retornos = cbind(tang_retornos, tang_port_d$weights[name]*
@@ -96,6 +99,8 @@ for (name in names_d){
 
 sample_retornos = cbind(sample_retornos ,rowSums(tang_retornos))
 colnames(sample_retornos)[9] = 'tang_port_d'
+
+mean(sample_retornos[,colnames(sample_retornos)=='tang_port_d'])
 
 write.csv(sample_retornos, 'csv/sample_retornos.csv')
 
@@ -156,7 +161,9 @@ text(sample_data[,4], sample_data[,1], rownames(sample_data), cex= 1, pos= 1)
 
 points(0, rf, col = 'blue')
 
-text(0, rf, 'rf', cex= 1, pos= 3)     
+text(0, rf, 'rf', cex= 1, pos= 3)  
+
+write.csv(sample_data, 'csv/sample_data.csv')
 
 # h)
  
@@ -174,6 +181,8 @@ tang_port_i = tangency.portfolio(sample_data_h[,1], var(sample_retornos_h), risk
 
 # el nuevo portafolio tangente es 
 tang_port_i
+
+write.csv(tang_port_i$weights, 'csv/port_tang_i.csv')
 
 # y tiene un sharp ratio
 (tang_port_i$er - rf)/tang_port_i$sd
