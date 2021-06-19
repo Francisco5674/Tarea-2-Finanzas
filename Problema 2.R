@@ -25,7 +25,7 @@ prima_riesgo = c()
 coeficientes = c()
 for (name in nombres){
   prima_riesgo = c(prima_riesgo, mean(datos[, name] - datos[,'RF']))
-  beta = data_reg[[name]]$coefficients['x']
+  beta = data_reg[[name]]$coefficients['Beta']
   coeficientes = c(coeficientes, beta)  
 }
 
